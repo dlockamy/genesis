@@ -2,32 +2,62 @@
 
 #include <SDL2/SDL.h>
 #include <stdio.h>
+#include <iostream>
 
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 480
 
 int main(int argc, char* args[]) {
-    SDL_Window* window = NULL;
-    SDL_Surface* screenSurface = NULL;
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-        fprintf(stderr, "could not initialize sdl2: %s\n", SDL_GetError());
-        return 1;
-    }
-    window = SDL_CreateWindow(
-                              "hello_sdl2",
-                              SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-                              SCREEN_WIDTH, SCREEN_HEIGHT,
-                              SDL_WINDOW_SHOWN
-                              );
-    if (window == NULL) {
-        fprintf(stderr, "could not create window: %s\n", SDL_GetError());
-        return 1;
-    }
-    screenSurface = SDL_GetWindowSurface(window);
-    SDL_FillRect(screenSurface, NULL, SDL_MapRGB(screenSurface->format, 0xFF, 0xFF, 0xFF));
-    SDL_UpdateWindowSurface(window);
-    SDL_Delay(2000);
-    //SDL_DestroyWindow(window);
-    //SDL_Quit();
-    return 0;
+
+
+std::cout << "Starting up..... ";
+
+if (SDL_Init(SDL_INIT_EVERYTHING) != 0){
+    std::cout << "SDL_Init Error: " << SDL_GetError() << std::endl;
+    return 4;
+}
+
+//open a window
+SDL_Window *win = SDL_CreateWindow("Hello World!", 100, 100, 640, 480, SDL_WINDOW_SHOWN);
+if (win == nullptr){
+    std::cout << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
+    return 3;
+}
+
+//renderer
+SDL_Renderer *ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+if (ren == nullptr){
+    std::cout << "SDL_CreateRenderer Error: " << SDL_GetError() << std::endl;
+    return 2;
+}
+
+//load bitmap
+SDL_Surface *bmp = SDL_LoadBMP("test_image.bmp");
+if (bmp == nullptr){
+    std::cout << "SDL_LoadBMP Error: " << SDL_GetError() << std::endl;
+    return 6;
+}
+
+SDL_Texture *tex = SDL_CreateTextureFromSurface(ren, bmp);
+SDL_FreeSurface(bmp);
+if (tex == nullptr){
+    std::cout << "SDL_CreateTextureFromSurface Error: " << SDL_GetError() << std::endl;
+    return 5;
+}
+
+std::cout << "Render clear";
+SDL_RenderClear(ren);
+
+std::cout << "Rendercopy";
+SDL_RenderCopy(ren, tex, NULL, NULL);
+
+std::cout << "SDL_RenderPresent ";
+SDL_RenderPresent(ren);
+
+std::cout << "SDL Delay";
+SDL_Delay(2000);
+
+
+return 0;
+
 }

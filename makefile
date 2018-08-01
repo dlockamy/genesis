@@ -5,7 +5,7 @@ ifeq ($(OSTYPE),)
 	OSTYPE := $(shell uname -s | awk -F_ '{print $$1}' | tr A-Z a-z)
 endif
 
-CC:=gcc
+CC:=g++
 CFLAGS:=
 SOURCES:=main.cpp
 BIN:=screend
@@ -13,6 +13,12 @@ BIN:=screend
 ifeq ($(OSTYPE),darwin) 
 CFLAGS =  -F/Library/Frameworks -framework SDL2
 endif
+
+ifeq ($(OSTYPE),linux)
+CFLAGS += -w -lSDL2 
+endif
+
+$(warning $(OSTYPE) )
 
 include audio/makefile
 include core/makefile
@@ -22,4 +28,4 @@ include renderer/makefile
 all : $(SOURCES) $(BIN)
 
 screend: $(SOURCES)
-	$(CC) $(CFLAGS) $(SOURCES) -o $(BIN)
+	$(CC) $(SOURCES) $(CFLAGS) -o $(BIN)
