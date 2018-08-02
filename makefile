@@ -8,6 +8,7 @@ endif
 CC:=g++
 CFLAGS:=
 SOURCES:=main.cpp
+INCLUDES:= -Iinclude
 BIN:=screend
 
 ifeq ($(OSTYPE),darwin) 
@@ -18,8 +19,6 @@ ifeq ($(OSTYPE),linux)
 CFLAGS += -w -lSDL2 
 endif
 
-$(warning $(OSTYPE) )
-
 include audio/makefile
 include core/makefile
 include network/makefile
@@ -27,5 +26,5 @@ include renderer/makefile
 
 all : $(SOURCES) $(BIN)
 
-screend: $(SOURCES)
-	$(CC) $(SOURCES) $(CFLAGS) -o $(BIN)
+screend: $(SOURCES) $(CORE_SRC)
+	$(CC) $(SOURCES) $(CORE_SRC)  $(INCLUDES) $(CFLAGS) -o $(BIN)

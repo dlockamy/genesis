@@ -3,10 +3,12 @@
 
 class OS
 {
-    public OS();
+    public:
+    
+    OS();
 
-    public void GetDisplayDeviceInfo();
-    public void GetAudioDeviceInfo();
+    void GetDisplayDeviceInfo();
+    void GetAudioDeviceInfo();
 
 
 
