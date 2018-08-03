@@ -27,4 +27,4 @@ include renderer/makefile
 all : $(SOURCES) $(BIN)
 
 screend: $(SOURCES) $(CORE_SRC)
-	$(CC) $(SOURCES) $(CORE_SRC)  $(INCLUDES) $(CFLAGS) -o $(BIN)
+	$(CC) $(SOURCES) $(CORE_SRC) $(RENDERER_SRC)  $(INCLUDES) $(CFLAGS) -o $(BIN)
