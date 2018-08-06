@@ -5,7 +5,7 @@
 
 class Renderer_OpenGl : public Renderer {
 public:
-    Renderer_OpenGl(int height, int width);
+    Renderer_OpenGl(OS &os, int height, int width);
     ~Renderer_OpenGl();
 
     void DrawLine(int x1, int y1, int x2, int y2, ColorSpace colorSpace);

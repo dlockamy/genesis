@@ -2,9 +2,10 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 
+#include <OS.h>
 #include "Render_OpenGl.h"
 
-Renderer_OpenGl::Renderer_OpenGl( int height, int width) {
+Renderer_OpenGl::Renderer_OpenGl(OS &os, int height, int width) {
 
 
 if (SDL_Init(SDL_INIT_EVERYTHING) != 0){
@@ -49,10 +50,23 @@ SDL_RenderCopy(ren, tex, NULL, NULL);
 std::cout << "SDL_RenderPresent ";
 SDL_RenderPresent(ren);
 
-std::cout << "SDL Delay";
-SDL_Delay(2000);
+bool quit = false;
 
+//Event handler
+SDL_Event e;
 
+while (!quit)
+{
+	//Handle events on queue
+	while (SDL_PollEvent(&e) != 0)
+	{
+		//User requests quit
+		if (e.type == SDL_QUIT)
+		{
+			quit = true;
+		}
+	}
+}
 
 };
 

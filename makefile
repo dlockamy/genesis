@@ -7,9 +7,9 @@ endif
 
 CC:=g++
 CFLAGS:=
-SOURCES:=main.cpp
+SOURCES:=
 INCLUDES:= -Iinclude
-BIN:=screend
+BIN:=build/screend
 
 ifeq ($(OSTYPE),darwin) 
 CFLAGS =  -F/Library/Frameworks -framework SDL2
@@ -26,5 +26,5 @@ include renderer/makefile
 
 all : $(SOURCES) $(BIN)
 
-screend: $(SOURCES) $(CORE_SRC)
+$(BIN) : $(SOURCES) $(CORE_SRC)
 	$(CC) $(SOURCES) $(CORE_SRC) $(RENDERER_SRC)  $(INCLUDES) $(CFLAGS) -o $(BIN)
