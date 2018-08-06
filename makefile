@@ -9,7 +9,8 @@ CC:=g++
 CFLAGS:=
 SOURCES:=
 INCLUDES:= -Iinclude
-BIN:=build/screend
+BUILD_DIR:=./build
+#BIN:=$(BUILD_DIR)/screend
 
 ifeq ($(OSTYPE),darwin) 
 CFLAGS =  -F/Library/Frameworks -framework SDL2
@@ -23,8 +24,9 @@ include audio/makefile
 include core/makefile
 include network/makefile
 include renderer/makefile
+include screend/makefile
 
-all : $(SOURCES) $(BIN)
+all : $(SOURCES) $(SCREEND_BIN)
 
-$(BIN) : $(SOURCES) $(CORE_SRC)
-	$(CC) $(SOURCES) $(CORE_SRC) $(RENDERER_SRC)  $(INCLUDES) $(CFLAGS) -o $(BIN)
+#$(BIN) : $(SOURCES) $(CORE_SRC)
+#	$(CC) $(SOURCES) $(CORE_SRC) $(RENDERER_SRC)  $(INCLUDES) $(CFLAGS) -o $(BIN)
